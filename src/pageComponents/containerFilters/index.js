@@ -2,9 +2,10 @@ import { useState } from "react";
 import ModalCreateTransaction from "../../containers/app/modals/modalCreate";
 import ButtonSave from "../buttonSave";
 import { Filters } from "../filters";
-import { Container } from "./style";
+import { Container, Content } from "./style";
 
-export function ContainerActions(){
+export function ContainerActions(props){
+    const { data, setData } = props;
     const [showModal, setShowModal] = useState(false);
 
     const handleShowModal = () => {
@@ -13,13 +14,15 @@ export function ContainerActions(){
 
     return(
         <div>
-            <Container>
-                <Filters />
-            </Container>
-            <ButtonSave onClick={handleShowModal}>
-                Criar
-            </ButtonSave>
+            <Content>
+                <ButtonSave onClick={handleShowModal}>
+                    Criar
+                </ButtonSave>
+            </Content>
 
+            <Container>
+                <Filters data={data} setData={setData}/>
+            </Container>
             <ModalCreateTransaction handleShowModal={handleShowModal} showModal={showModal} />
         </div>
     );

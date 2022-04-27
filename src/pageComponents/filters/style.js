@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { Select } from "antd";
 
 export const SelectCustom = styled(Select)`
-    width: 200px;
+    width: 20%;
+    margin: 10px;
 `;
 
 export const Container = styled.div`
@@ -10,5 +11,5 @@ export const Container = styled.div`
     margin-top: 20px;
     width: 100%;
     padding: 0px 20px 0px 20px;
-    justify-content: space-between;
+    justify-content: center;
 `;
