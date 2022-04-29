@@ -76,16 +76,6 @@ function App() {
     setLoading(false);
   }, []);
 
-  // const loadData = async (setData) => {
-  //   try {
-  //     const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
-  //     const body = await response.json();
-  //     setData(body);
-  //   } catch(error){
-  //     console.log(error);
-  //   }
-  // }
-
   const handleRefresh = (setData) => {
     loadTransactions(setData);
   };
@@ -101,7 +91,7 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <Header />
       {
         loading ? (
@@ -141,7 +131,7 @@ function App() {
         setData={setData} 
         handleRefresh={handleRefresh}
       />
-    </div>
+    </>
   );
 }
 
