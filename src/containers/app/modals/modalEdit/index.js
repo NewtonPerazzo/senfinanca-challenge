@@ -1,33 +1,36 @@
 import { Form, Input, Modal, Select } from "antd";
-import createTransaction from "../../../../api/create";
+import editTransaction from "../../../../api/update";
+
 import ButtonSave from "../../../../pageComponents/buttonSave";
 
-export default function ModalCreateTransaction(props){
+export default function ModalEditTransaction(props){
     const { 
         showModal, 
         handleShowModal, 
-        setData,
-        handleRefresh,
+        transaction, 
+        setData, 
+        handleRefresh 
     } = props;
-    
     const [form] = Form.useForm();
+
     const { Option } = Select;
 
-    const handleSave = (values) => {
+    const handleEdit = (values) => {
+        values.id = transaction?.id;
         values.value = parseFloat(values.value);
-        createTransaction(values);
+        editTransaction(values);
         handleRefresh(setData);
         handleShowModal();
     };
 
     return(
         <Modal
-            title={"Criar Transação"}
+            title={"Editar Transação"}
             visible={showModal}
             onCancel={handleShowModal}
             footer={false}
         >
-            <Form form={form} onFinish={handleSave} onAbort={form.resetFields()}>
+            <Form form={form} initialValues={transaction} onFinish={handleEdit} onAbort={form.resetFields()}>
                 <Form.Item
                     name={"name"}
                     label={"Nome da Transação"}

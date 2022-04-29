@@ -1,6 +1,5 @@
 import { Select } from "antd";
 import { useEffect, useState } from "react";
-import getTransactions from "../../api/get";
 import useFilters from "../../hooks/useFilters";
 import { SelectCustom, Container } from "./style";
 
@@ -8,10 +7,10 @@ export function Filters(props){
     const { data, setData } = props;
     const { handleFilter, filters } = useFilters();
     const [types, setTypes] = useState();
+    const [oldData, setOldData] = useState([]);
     const [categories, setCategories] = useState();
-    const oldData = getTransactions();
     const { Option } = Select; 
-
+    
     useEffect(() => {
         handleChangeFilter();
         // Se o filtro tiver vazio, retorna os valores iniciais
@@ -19,6 +18,19 @@ export function Filters(props){
             setData(oldData);
         }
     }, [filters]);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+              const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
+              const body = await response.json();
+              setOldData(body);
+            } catch(error){
+              console.log(error);
+            }
+          }
+          loadData();
+    }, []);
 
     useEffect(() => {
         let typesAux = [];
@@ -56,10 +68,10 @@ export function Filters(props){
                 showSearch
                 optionFilterProp="children"
                 filterOption={(value, option) =>
-                    option.children.toLowerCase().indexOf(value.toLowerCase()) >= 0
+                    option?.children?.toLowerCase().indexOf(value?.toLowerCase()) >= 0
                 }
                 filterSort={(a, b) =>
-                    a.children.toLowerCase().localeCompare(b.children.toLowerCase())
+                    a?.children?.toLowerCase().localeCompare(b?.children?.toLowerCase())
                 }
                 onChange={(value) => {
                     handleFilter("name", value)
@@ -67,7 +79,7 @@ export function Filters(props){
             >
                 {
                     data?.map((element) => (
-                        <Option value={element.name}>{element.name}</Option>
+                        <Option value={element?.name}>{element?.name}</Option>
                     ))
                 }
             </SelectCustom>
@@ -78,10 +90,10 @@ export function Filters(props){
                 showSearch
                 optionFilterProp="children"
                 filterOption={(value, option) =>
-                    option.children.toLowerCase().indexOf(value.toLowerCase()) >= 0
+                    option?.children?.toLowerCase().indexOf(value?.toLowerCase()) >= 0
                 }
                 filterSort={(a, b) =>
-                    a.children.toLowerCase().localeCompare(b.children.toLowerCase())
+                    a?.children?.toLowerCase().localeCompare(b?.children?.toLowerCase())
                 }
                 onChange={(value) => {
                     handleFilter("type", value)
@@ -100,10 +112,10 @@ export function Filters(props){
                 showSearch
                 optionFilterProp="children"
                 filterOption={(value, option) =>
-                    option.children.toLowerCase().indexOf(value.toLowerCase()) >= 0
+                    option?.children?.toLowerCase().indexOf(value?.toLowerCase()) >= 0
                 }
                 filterSort={(a, b) =>
-                    a.children.toLowerCase().localeCompare(b.children.toLowerCase())
+                    a?.children?.toLowerCase().localeCompare(b?.children?.toLowerCase())
                 }
                 onChange={(value) => {
                     handleFilter("category", value)

@@ -5,17 +5,17 @@ import { Filters } from "../filters";
 import { Container, Content } from "./style";
 
 export function ContainerActions(props){
-    const { data, setData } = props;
-    const [showModal, setShowModal] = useState(false);
+    const { data, setData, handleRefresh } = props;
+    const [showModalCreate, setShowModalCreate] = useState(false);
 
-    const handleShowModal = () => {
-        setShowModal(!showModal)
+    const handleShowModalCreate = () => {
+        setShowModalCreate(!showModalCreate)
     };
 
     return(
         <div>
             <Content>
-                <ButtonSave onClick={handleShowModal}>
+                <ButtonSave onClick={handleShowModalCreate}>
                     Criar
                 </ButtonSave>
             </Content>
@@ -23,7 +23,12 @@ export function ContainerActions(props){
             <Container>
                 <Filters data={data} setData={setData}/>
             </Container>
-            <ModalCreateTransaction handleShowModal={handleShowModal} showModal={showModal} />
+            <ModalCreateTransaction 
+                handleShowModal={handleShowModalCreate} 
+                handleRefresh={handleRefresh}
+                showModal={showModalCreate}
+                setData={setData} 
+            />
         </div>
     );
 }
