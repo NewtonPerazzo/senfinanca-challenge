@@ -12,7 +12,7 @@ import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 import ModalDeleteTransaction from "./containers/app/modals/modalDelete";
 import ModalEditTransaction from "./containers/app/modals/modalEdit";
 import loadTransactions from "./api/list";
-
+import moment from "moment";
 
 function App() {
   const [data, setData] = useState([]);
@@ -48,6 +48,14 @@ function App() {
       key: 4,
       title: "Categoria da Transação",
       dataIndex: "category",
+    },
+    {
+      key: 5,
+      title: "Data de criação",
+      dataIndex: "created_at",
+      render: (record) => (
+        <p>{moment(record?.created_at).format("DD/MM/YYYY")}</p>
+      )
     },
     {
       key: 5,
@@ -118,7 +126,9 @@ function App() {
                 showSizeChanger 
                 onShowSizeChange={onShowSizeChange}
                 pagination={{ pageSize: 5 }} 
-                bordered />
+                bordered 
+              />
+
             </Container>
           </>
         )

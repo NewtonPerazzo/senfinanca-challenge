@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Select, Input } from "antd";
 import { useEffect, useState } from "react";
 import loadTransactions from "../../api/list";
 import useFilters from "../../hooks/useFilters";
@@ -47,11 +47,12 @@ export function Filters(props){
         const keys = Object.keys(filters);
         keys?.map((key) => {
             if(filters[key]?.length > 0){
-                newFilteredData = newFilteredData.filter((item) => item[key] === filters[key][0]);
+                    newFilteredData = newFilteredData.filter((item) => item[key] === filters[key][0]);
             }
         });
         setData(newFilteredData);
     };
+
     return(
         <Container>
             <SelectCustom 
