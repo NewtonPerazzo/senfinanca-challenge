@@ -72,19 +72,19 @@ function App() {
   ];
 
   useEffect(() => {
-    loadData(setData);
+    loadTransactions(setData);
+    setLoading(false);
   }, []);
 
-  const loadData = async (setData) => {
-    try {
-      const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
-      const body = await response.json();
-      setData(body);
-      setLoading(false);
-    } catch(error){
-      console.log(error);
-    }
-  }
+  // const loadData = async (setData) => {
+  //   try {
+  //     const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
+  //     const body = await response.json();
+  //     setData(body);
+  //   } catch(error){
+  //     console.log(error);
+  //   }
+  // }
 
   const handleRefresh = (setData) => {
     loadTransactions(setData);
@@ -99,11 +99,6 @@ function App() {
       setTransactionSelected(record);
       setShowModalEdit(!showModalEdit);
   };
-
-  const onShowSizeChange = (current, pageSize) => {
-    console.log(current, pageSize);
-  }
-
 
   return (
     <div>
@@ -121,10 +116,6 @@ function App() {
               <TableStyled 
                 columns={columns} 
                 dataSource={data}
-                total={data?.length}
-                showTotal={total => `Total: ${data?.length} transação (ões).`} 
-                showSizeChanger 
-                onShowSizeChange={onShowSizeChange}
                 pagination={{ pageSize: 5 }} 
                 bordered 
               />
