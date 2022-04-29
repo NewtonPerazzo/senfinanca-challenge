@@ -1,5 +1,5 @@
 import { Form, Input, Modal, Select } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import editTransaction from "../../../../api/update";
 
 import ButtonSave from "../../../../pageComponents/buttonSave";

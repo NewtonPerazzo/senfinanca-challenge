@@ -1,4 +1,4 @@
-import { PlusCircleOutlined, PlusCircleTwoTone } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import ModalCreateTransaction from "../../containers/app/modals/modalCreate";
 import ButtonSave from "../buttonSave";

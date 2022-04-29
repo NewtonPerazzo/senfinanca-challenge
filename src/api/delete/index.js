@@ -9,7 +9,7 @@ const deleteTransaction = (id, data, setData, transaction) => {
         response.json();
     })
     .then(result => {
-        const newData = data?.filter(element => element.id != transaction?.id);
+        const newData = data?.filter(element => element.id !== transaction?.id);
         setData(newData)
         openNotification("success", "Tudo certo!", "A transação foi excluída com sucesso.")
     })
