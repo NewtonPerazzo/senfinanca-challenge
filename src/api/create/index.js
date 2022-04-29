@@ -1,7 +1,7 @@
 import openNotification from "../../utils/openNotification";
 
 
-const createTransaction = (payload) => {
+const createTransaction = (payload, handleRefresh, setData) => {
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -16,6 +16,7 @@ const createTransaction = (payload) => {
         response.json();
     })
     .then(result => {
+        handleRefresh(setData);
         openNotification("success", "Tudo certo!", "A transação foi criada com sucesso.")
     })
     .catch(error => {

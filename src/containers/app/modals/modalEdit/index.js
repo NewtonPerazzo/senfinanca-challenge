@@ -1,4 +1,5 @@
 import { Form, Input, Modal, Select } from "antd";
+import { useEffect, useState } from "react";
 import editTransaction from "../../../../api/update";
 
 import ButtonSave from "../../../../pageComponents/buttonSave";
@@ -15,11 +16,15 @@ export default function ModalEditTransaction(props){
 
     const { Option } = Select;
 
+    useEffect(() => {
+        form.setFieldsValue(transaction)
+      }, [transaction])
+
     const handleEdit = (values) => {
         values.id = transaction?.id;
         values.value = parseFloat(values.value);
-        editTransaction(values);
-        handleRefresh(setData);
+        editTransaction(values, handleRefresh, setData);
+        form.resetFields();
         handleShowModal();
     };
 
@@ -27,10 +32,14 @@ export default function ModalEditTransaction(props){
         <Modal
             title={"Editar Transação"}
             visible={showModal}
-            onCancel={handleShowModal}
+            onCancel={() => { handleShowModal(); }}
             footer={false}
+            destroyOnClose={true}
         >
-            <Form form={form} initialValues={transaction} onFinish={handleEdit} onAbort={form.resetFields()}>
+            <Form 
+                form={form}
+                onFinish={handleEdit} 
+            >
                 <Form.Item
                     name={"name"}
                     label={"Nome da Transação"}
@@ -86,7 +95,7 @@ export default function ModalEditTransaction(props){
 
                 <Form.Item>
                     <ButtonSave htmlType="submit">
-                        Salvar
+                        Editar
                     </ButtonSave>
                 </Form.Item>
             </Form>

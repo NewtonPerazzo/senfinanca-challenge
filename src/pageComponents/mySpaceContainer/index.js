@@ -1,5 +1,6 @@
+import { DollarCircleTwoTone, DownCircleTwoTone, UpCircleTwoTone } from "@ant-design/icons";
 import { useEffect, useState } from "react";
-import { Container, TextItem } from "./style";
+import { Container, Content, TextItem } from "./style";
 
 export default function MySpaceContainer(props){
     const { data } = props;
@@ -30,9 +31,18 @@ export default function MySpaceContainer(props){
 
     return(
         <Container>
-            <TextItem>Entradas: R$ {input.toFixed(2)}</TextItem>
-            <TextItem>Saídas: R$ {output.toFixed(2)}</TextItem>
-            <TextItem>Saldo: R$ {total.toFixed(2)}</TextItem>
+            <Content>
+                <UpCircleTwoTone twoToneColor={"#00ff00"} style={{marginRight: 4}} />
+                <TextItem>Entradas: R$ {input.toFixed(2)}</TextItem>
+            </Content>
+            <Content>
+                <DownCircleTwoTone twoToneColor={"#ff0000"} style={{marginRight: 4}} />
+                <TextItem>Saídas: R$ {output.toFixed(2)}</TextItem>
+            </Content>
+            <Content>
+                <DollarCircleTwoTone twoToneColor={total > 0 ? "#00ff00" : "#ff0000"} style={{marginRight: 4}} />
+                <TextItem>Saldo: R$ {total.toFixed(2)}</TextItem>
+            </Content>
         </Container>
     );
 };

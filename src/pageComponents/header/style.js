@@ -3,11 +3,16 @@ import styled from 'styled-components';
 export const Container = styled.div`
     width: 100%;
     background-color: orange;
-    height: 60px;
+    height: 80px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+`;
+
+export const Image = styled.img`
+    width: 100px;
+    height: 60px;
 `;
 
 export const TitleHeader = styled.p`
@@ -15,6 +20,7 @@ export const TitleHeader = styled.p`
     font-size: 28px;
     color: #fff;
     font-weight: bold;
+    margin-bottom: 0;
 `;
 
 export const TextHeader = styled.p`
@@ -22,4 +28,5 @@ export const TextHeader = styled.p`
     font-size: 16px;
     color: #fff;
     font-style: italic;
+    margin-bottom: 0;
 `;

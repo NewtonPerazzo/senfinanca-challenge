@@ -15,8 +15,7 @@ export default function ModalCreateTransaction(props){
 
     const handleSave = (values) => {
         values.value = parseFloat(values.value);
-        createTransaction(values);
-        handleRefresh(setData);
+        createTransaction(values, handleRefresh, setData);
         handleShowModal();
     };
 

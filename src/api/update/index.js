@@ -1,6 +1,6 @@
 import openNotification from "../../utils/openNotification";
 
-const editTransaction = (payload) => {
+const editTransaction = (payload, handleRefresh, setData) => {
     const requestOptions = {
         method: 'PUT',
         headers: {
@@ -14,6 +14,7 @@ const editTransaction = (payload) => {
         response.json();
     })
     .then(result => {
+        handleRefresh(setData);
         openNotification("success", "Tudo certo!", "A transação foi editada com sucesso.")
     })
     .catch(error => {

@@ -19,7 +19,7 @@ export default function ModalDeleteTransaction(props){
             onCancel={handleShowModal}
             footer={false}
         >
-            <p>Tem certeza que deseja excluir a transação {transaction?.name}</p>
+            <p>Tem certeza que deseja excluir a transação {transaction?.name}?</p>
             <ButtonSave onClick={handleDelete}>
                 Excluir
             </ButtonSave>

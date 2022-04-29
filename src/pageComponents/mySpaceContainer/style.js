@@ -10,9 +10,15 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
+export const Content = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
 export const TextItem = styled.p`
     font-style: italic;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
+    margin-bottom: 0;
 `

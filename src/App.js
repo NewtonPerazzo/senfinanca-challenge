@@ -6,7 +6,7 @@ import { Container } from "./containers/app";
 import { ContainerActions } from "./pageComponents/containerFilters";
 import { useEffect, useState } from "react";
 import MySpaceContainer from "./pageComponents/mySpaceContainer";
-import { Space } from "antd";
+import { Space, Spin } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 
 import ModalDeleteTransaction from "./containers/app/modals/modalDelete";
@@ -17,6 +17,7 @@ import loadTransactions from "./api/list";
 function App() {
   const [data, setData] = useState([]);
   const [transactionSelected, setTransactionSelected] = useState({});
+  const [loading, setLoading] = useState(true);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
 
@@ -51,17 +52,11 @@ function App() {
     {
       key: 5,
       align: "center",
-      render: (_, record) => (
+      render: (record) => (
         <Space>
-          <EditTwoTone twoToneColor="orange" onClick={() => {
-              setTransactionSelected(record);
-              handleShowModalEdit(); 
-            }} 
+          <EditTwoTone twoToneColor="orange" onClick={() => handleShowModalEdit(record)} 
           />
-          <DeleteTwoTone twoToneColor="red" onClick={() => {
-              setTransactionSelected(record);
-              handleShowModalDelete(); 
-            }}
+          <DeleteTwoTone twoToneColor="red" onClick={() => handleShowModalDelete(record)}
           />
         </Space>
       ),
@@ -77,6 +72,7 @@ function App() {
       const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
       const body = await response.json();
       setData(body);
+      setLoading(false);
     } catch(error){
       console.log(error);
     }
@@ -86,23 +82,47 @@ function App() {
     loadTransactions(setData);
   };
 
-  const handleShowModalDelete = () => {
-    setShowModalDelete(!showModalDelete)
+  const handleShowModalDelete = (record) => {
+    setTransactionSelected(record);
+    setShowModalDelete(!showModalDelete);
   };
 
-  const handleShowModalEdit = () => {
-      setShowModalEdit(!showModalEdit)
+  const handleShowModalEdit = (record) => {
+      setTransactionSelected(record);
+      setShowModalEdit(!showModalEdit);
   };
+
+  const onShowSizeChange = (current, pageSize) => {
+    console.log(current, pageSize);
+  }
 
 
   return (
     <div>
       <Header />
-      <MySpaceContainer data={data} />
-      <ContainerActions data={data} setData={setData} handleRefresh={handleRefresh} />
-      <Container>
-        <TableStyled columns={columns} dataSource={data} bordered />
-      </Container>
+      {
+        loading ? (
+          <div className="container">
+            <Spin />
+          </div>
+        ) : (
+          <>
+            <MySpaceContainer data={data} />
+            <ContainerActions data={data} setData={setData} handleRefresh={handleRefresh} />
+            <Container>
+              <TableStyled 
+                columns={columns} 
+                dataSource={data}
+                total={data?.length}
+                showTotal={total => `Total: ${data?.length} transação (ões).`} 
+                showSizeChanger 
+                onShowSizeChange={onShowSizeChange}
+                pagination={{ pageSize: 5 }} 
+                bordered />
+            </Container>
+          </>
+        )
+      }
 
       <ModalDeleteTransaction 
         transaction={transactionSelected} 
@@ -114,6 +134,7 @@ function App() {
 
       <ModalEditTransaction 
         transaction={transactionSelected} 
+        setTransactionSelected={setTransactionSelected}
         handleShowModal={handleShowModalEdit} 
         showModal={showModalEdit}
         setData={setData} 

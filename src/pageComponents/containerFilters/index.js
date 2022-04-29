@@ -1,3 +1,4 @@
+import { PlusCircleOutlined, PlusCircleTwoTone } from "@ant-design/icons";
 import { useState } from "react";
 import ModalCreateTransaction from "../../containers/app/modals/modalCreate";
 import ButtonSave from "../buttonSave";
@@ -16,6 +17,7 @@ export function ContainerActions(props){
         <div>
             <Content>
                 <ButtonSave onClick={handleShowModalCreate}>
+                    <PlusCircleOutlined twoToneColor={"#fff"} style={{marginRight: 5}} />
                     Criar
                 </ButtonSave>
             </Content>

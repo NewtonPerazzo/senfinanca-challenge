@@ -1,5 +1,6 @@
 import { Select } from "antd";
 import { useEffect, useState } from "react";
+import loadTransactions from "../../api/list";
 import useFilters from "../../hooks/useFilters";
 import { SelectCustom, Container } from "./style";
 
@@ -20,16 +21,7 @@ export function Filters(props){
     }, [filters]);
 
     useEffect(() => {
-        const loadData = async () => {
-            try {
-              const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
-              const body = await response.json();
-              setOldData(body);
-            } catch(error){
-              console.log(error);
-            }
-          }
-          loadData();
+       loadTransactions(setOldData);
     }, []);
 
     useEffect(() => {
@@ -79,7 +71,7 @@ export function Filters(props){
             >
                 {
                     data?.map((element) => (
-                        <Option value={element?.name}>{element?.name}</Option>
+                        <Option key={element} value={element?.name}>{element?.name}</Option>
                     ))
                 }
             </SelectCustom>
