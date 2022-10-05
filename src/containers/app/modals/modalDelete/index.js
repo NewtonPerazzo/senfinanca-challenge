@@ -4,10 +4,11 @@ import deleteTransaction from "../../../../api/delete";
 import ButtonSave from "../../../../pageComponents/buttonSave";
 
 export default function ModalDeleteTransaction(props){
-    const { showModal, handleShowModal, setData, data, transaction } = props;
+    const { showModal, handleShowModal, handleRefresh, transaction } = props;
     
-    const handleDelete = () => {
-        deleteTransaction(transaction?.id, data, setData, transaction);
+    const handleDelete = async () => {
+        await deleteTransaction(transaction?.id);
+        handleRefresh();
         handleShowModal();
     };
 

@@ -1,8 +1,8 @@
-const loadTransactions = async (setData) => {
+const loadTransactions = async () => {
     try {
       const response = await fetch('https://senfinanca-challenge-api.herokuapp.com/api/transactions/');
       const body = await response.json();
-      setData(body);
+      return body;
     } catch(error){
       console.log(error);
     }

@@ -20,12 +20,12 @@ export default function ModalEditTransaction(props){
         form.setFieldsValue(transaction)
       }, [transaction])
 
-    const handleEdit = (values) => {
+    const handleEdit = async (values) => {
         values.id = transaction?.id;
         values.value = parseFloat(values.value);
-        editTransaction(values, handleRefresh, setData);
+        await editTransaction(values);
         form.resetFields();
-        handleShowModal();
+        handleRefresh();
     };
 
     return(

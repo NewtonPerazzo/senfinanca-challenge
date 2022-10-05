@@ -4,6 +4,19 @@ import loadTransactions from "../../api/list";
 import useFilters from "../../hooks/useFilters";
 import { SelectCustom, Container } from "./style";
 
+export const handleChangeFilter = (oldData, filters) => {
+    let newFilteredData = [...oldData];
+    const keys = Object.keys(filters);
+    keys?.forEach((key) => {
+        if(filters[key]?.length > 0){
+            newFilteredData = newFilteredData?.filter((item) => {
+                return item[key] === filters[key][0]
+            });
+        }
+    });
+    return newFilteredData;
+};
+
 export function Filters(props){
     const { data, setData } = props;
     const { handleFilter, filters } = useFilters();
@@ -13,7 +26,7 @@ export function Filters(props){
     const { Option } = Select; 
     
     useEffect(() => {
-        handleChangeFilter();
+        setData(handleChangeFilter(oldData, filters));
         // Se o filtro tiver vazio, retorna os valores iniciais
         if(Object.keys(filters).length === 0){
             setData(oldData);
@@ -21,8 +34,8 @@ export function Filters(props){
     }, [filters]);
 
     useEffect(() => {
-       loadTransactions(setOldData);
-    }, []);
+        setOldData(loadTransactions());
+    }, [data]);
 
     useEffect(() => {
         let typesAux = [];
@@ -41,19 +54,6 @@ export function Filters(props){
         };
         loadSelectOptions();
     }, [data]);
-
-    const handleChangeFilter = () => {
-        let newFilteredData = [...oldData];
-        const keys = Object.keys(filters);
-        keys?.forEach((key) => {
-            if(filters[key]?.length > 0){
-                newFilteredData = newFilteredData.filter((item) => {
-                    return item[key] === filters[key][0]
-                });
-            }
-        });
-        setData(newFilteredData);
-    };
 
     return(
         <Container>

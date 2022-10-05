@@ -9,7 +9,7 @@ export const Container = styled.header`
     justify-content: space-between;
 
    @media screen and (max-width: 777px) {
-        background-color: green;
+        
     }
 `;
 

@@ -1,7 +1,7 @@
 import openNotification from "../../utils/openNotification";
 
 
-const createTransaction = (payload, handleRefresh, setData) => {
+const createTransaction = async (payload) => {
     const requestOptions = {
         method: 'POST',
         headers: {
@@ -11,12 +11,11 @@ const createTransaction = (payload, handleRefresh, setData) => {
         body: JSON.stringify(payload)
     };
       
-    fetch("https://senfinanca-challenge-api.herokuapp.com/api/transactions/", requestOptions)
+    await fetch("https://senfinanca-challenge-api.herokuapp.com/api/transactions/", requestOptions)
     .then(response => {
         response.json();
     })
     .then(result => {
-        handleRefresh(setData);
         openNotification("success", "Tudo certo!", "A transação foi criada com sucesso.")
     })
     .catch(error => {

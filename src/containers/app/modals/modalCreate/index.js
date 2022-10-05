@@ -13,9 +13,10 @@ export default function ModalCreateTransaction(props){
     const [form] = Form.useForm();
     const { Option } = Select;
 
-    const handleSave = (values) => {
+    const handleSave = async (values) => {
         values.value = parseFloat(values.value);
-        createTransaction(values, handleRefresh, setData);
+        await createTransaction(values);
+        handleRefresh();
         handleShowModal();
     };
 

@@ -1,6 +1,30 @@
-import { DollarCircleTwoTone, DownCircleTwoTone, UpCircleTwoTone } from "@ant-design/icons";
 import { useEffect, useState } from "react";
+import { UpCircleTwoToneStyled, DownCircleTwoToneStyled, DollarCircleTwoToneStyled } from "../../containers/styledIcons";
 import { Container, Content, TextItem } from "./style";
+
+export const loadInput = (data) => {
+    let inputAux = 0;
+    data?.forEach((element) => {
+        if(element.type === "Entrada"){
+            inputAux += element.value;
+        }
+    });
+    return inputAux;
+};
+
+export const loadOuput = (data) => {
+    let loadOuput = 0;
+    data?.forEach((element) => {
+        if(element.type === "Saída"){
+            loadOuput += element.value;
+        }
+    });
+    return loadOuput;
+};
+
+export const loadTotal = (input, output) => {
+    return input - output;
+}
 
 export default function MySpaceContainer(props){
     const { data } = props;
@@ -9,38 +33,23 @@ export default function MySpaceContainer(props){
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        const loadValues = () => {
-            let inputAux = 0;
-            let outputAux = 0;
-            let totalAux = 0;
-            data?.map((element) => {
-                if(element.type === "Entrada"){
-                    inputAux += element.value;
-                }
-                if(element.type === "Saída"){
-                    outputAux += element.value;
-                }
-            });
-            totalAux = inputAux - outputAux;
-            setInput(inputAux);
-            setOutput(outputAux);
-            setTotal(totalAux);
-        };
-        loadValues();
-    }, [data]);
+        setInput(loadInput(data));
+        setOutput(loadOuput(data));
+        setTotal(loadTotal(input, output));
+    }, [data, input, output]);
 
     return(
         <Container>
             <Content>
-                <UpCircleTwoTone twoToneColor={"#00ff00"} style={{marginRight: 4}} />
+                <UpCircleTwoToneStyled twoToneColor={"#00ff00"} />
                 <TextItem>Entradas: R$ {input.toFixed(2)}</TextItem>
             </Content>
             <Content>
-                <DownCircleTwoTone twoToneColor={"#ff0000"} style={{marginRight: 4}} />
+                <DownCircleTwoToneStyled twoToneColor={"#ff0000"} />
                 <TextItem>Saídas: R$ {output.toFixed(2)}</TextItem>
             </Content>
             <Content>
-                <DollarCircleTwoTone twoToneColor={total > 0 ? "#00ff00" : "#ff0000"} style={{marginRight: 4}} />
+                <DollarCircleTwoToneStyled twoToneColor={total > 0 ? "#00ff00" : "#ff0000"} />
                 <TextItem>Saldo: R$ {total.toFixed(2)}</TextItem>
             </Content>
         </Container>
