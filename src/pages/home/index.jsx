@@ -51,7 +51,6 @@ const Home = () => {
         <MySpaceContainer data={data} />
         <ContainerActions data={data} setData={setData} handleRefresh={handleRefresh} />
         <Container>
-          <input alt="Olá" type="text"/>
           <TableMainData 
             data={data}
             handleShowModalDelete={handleShowModalDelete}
